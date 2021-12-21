@@ -18,4 +18,4 @@ const otpschema = new Schema({
     },
 });
 
-module.exports = mongoose.model("otp", otpschema);
+module.exports = mongoose.model("otp_SuperAdmin", otpschema);

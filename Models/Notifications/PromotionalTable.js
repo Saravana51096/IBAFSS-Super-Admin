@@ -37,4 +37,4 @@ const Promotional = new mongoose.Schema({
             default: Date.now()
         }
 })
-module.exports = mongoose.model("Promotional", Promotional);
+module.exports = mongoose.model("Promotional_SuperAdmin", Promotional);

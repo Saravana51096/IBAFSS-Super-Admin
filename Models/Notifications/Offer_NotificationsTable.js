@@ -62,4 +62,4 @@ const Offer_Notifications = new mongoose.Schema({
             default: Date.now()
         }
 })
-module.exports = mongoose.model("Offer_Notifications", Offer_Notifications);
+module.exports = mongoose.model("Offer_Notifications_SuperAdmin", Offer_Notifications);

@@ -15,11 +15,6 @@ const ModulesTable = new mongoose.Schema({
         {
             type: String,
         },
-        Value:
-        {
-        type: [String],
-        },
-
         isActive:
         {
             type: Boolean,
@@ -31,4 +26,4 @@ const ModulesTable = new mongoose.Schema({
             default: Date.now()
         }
 })
-module.exports = mongoose.model("Modules", ModulesTable);
+module.exports = mongoose.model("Modules_SuperAdmin", ModulesTable);

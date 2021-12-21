@@ -38,4 +38,4 @@ const Coupons = new mongoose.Schema({
             default: Date.now()
         }
 })
-module.exports = mongoose.model("Coupons", Coupons);
+module.exports = mongoose.model("Coupons_SuperAdmin", Coupons);

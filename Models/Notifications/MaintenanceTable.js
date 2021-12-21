@@ -33,4 +33,4 @@ const Maintenance = new mongoose.Schema({
             default: Date.now()
         }
 })
-module.exports = mongoose.model("Maintenance", Maintenance);
+module.exports = mongoose.model("Maintenance_SuperAdmin", Maintenance);

@@ -10,7 +10,7 @@ const otpGenerator = require('otp-generator')
 const otp = require('../Models/otpTable')
 
 
-router.post('/User/Register', async (req, res) => {
+router.post('/UserAdmin/Register', async (req, res) => {
     try {
         let user = await User.findOne({ Email: req.body.Email });
         if (user) {
@@ -38,7 +38,7 @@ router.post('/User/Register', async (req, res) => {
                         if (err) {
                             return res.status(500).send({ msg: err.message });
                         }
-                        const link = `http://localhost:8080/User/confirmation/${insertUser.Email}/${token.token}`;
+                        const link = `http://localhost:4000/UserAdmin/confirmation/${insertUser.Email}/${token.token}`;
 
                         var transporter = nodemailer.createTransport({ service: 'gmail', auth: { user: process.env.email, pass: process.env.password } });
                         var mailOptions = { from: process.env.email, to: insertUser.Email, subject: 'Account Verification Link', text: 'Hello ' + insertUser.Name + ',\n\n' + 'Please verify your account by clicking the link:' + link + '\n\nThank You!\n' };
@@ -57,7 +57,7 @@ router.post('/User/Register', async (req, res) => {
     }
 });
 
-router.get('/User/confirmation/:Email/:token', async (req, res) => {
+router.get('/UserAdmin/confirmation/:Email/:token', async (req, res) => {
     try {
         Token.findOne({ token: req.params.token }, function (err, token) {
             if (!token){
@@ -99,7 +99,7 @@ router.get('/User/confirmation/:Email/:token', async (req, res) => {
 
 
 
-router.post("/User/login", async (req, res) => {
+router.post("/UserAdmin/login", async (req, res) => {
     const user = await User.findOne({ Email: req.body.Email })
     if (user.isVerified) {
 
@@ -137,20 +137,24 @@ router.post("/User/login", async (req, res) => {
     }
 })
 
-router.post('/User/verify/:id', async (req, res) => {
+router.post('/UserAdmin/verify/:id', async (req, res) => {
     
     var data = await otp.findOne({ id: req.params._id })
-    if (req.body.otpgenerate == data.otpgenerate) {
-        res.send("You has been successfully registered");
-        await data.delete();
-    }
-    else {
-        res.send('Invalid OTP')
+    if (data) {
+        if (req.body.otpgenerate == data.otpgenerate) {
+            res.send("You has been successfully registered");
+            await data.delete();
+        }
+        else {
+            res.send({message:'Invalid OTP'})
+        }
+    } else {
+        res.send({message:'Click resend button to generate a OTP Mail'})
     }
 });
 
 
-router.post("/User/resetpassword", async (req, res) => {
+router.post("/UserAdmin/resetpassword", async (req, res) => {
     try {
         const user = await User.findOne({ Email: req.body.Email });
         if (!user)
@@ -163,7 +167,7 @@ router.post("/User/resetpassword", async (req, res) => {
                 token: crypto.randomBytes(32).toString("hex"),
             }).save();
         }
-        const link = `http://localhost:4000/resetpassword/${user._id}/${token.token}`;
+        const link = `http://localhost:4000/passwordReset/${user._id}/${token.token}`;
         await sendEmail(user.Email, "Password reset", link);
    
         res.json({ message:"password reset link successfully sent to your email account"});
@@ -174,7 +178,7 @@ router.post("/User/resetpassword", async (req, res) => {
 });
 
 
-router.post("/resetpassword/:userId/:token", async (req, res) => {
+router.post("/reset/:userId/:token", async (req, res) => {
 
     try {
       

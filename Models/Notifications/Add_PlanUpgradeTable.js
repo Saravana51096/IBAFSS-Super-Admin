@@ -58,4 +58,4 @@ const PlanUpgrade = new mongoose.Schema({
             default: Date.now()
         }
 })
-module.exports = mongoose.model("Plan_Upgrade", PlanUpgrade);
+module.exports = mongoose.model("Plan_Upgrade_SuperAdmin", PlanUpgrade);

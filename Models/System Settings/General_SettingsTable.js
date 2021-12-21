@@ -97,4 +97,4 @@ const General_Settings = new mongoose.Schema({
     }   
     
 })
-module.exports = mongoose.model("General_Settings", General_Settings);
+module.exports = mongoose.model("General_Settings_SuperAdmin", General_Settings);

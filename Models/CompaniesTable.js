@@ -110,4 +110,4 @@ const CompaniesTable = new mongoose.Schema({
     }   
     
 })
-module.exports = mongoose.model("Companies", CompaniesTable);
+module.exports = mongoose.model("Companies_SuperAdmin", CompaniesTable);

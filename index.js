@@ -81,10 +81,10 @@ app.use('/', General_Settings)
 
 
 // Step 1
-var PORT =process.env.PORT || 8080;
+var PORT =process.env.PORT || 4000;
 
 //Listen Port
-app.listen(PORT,() => { console.log("Super Admin started at this port 8080");})
+app.listen(PORT,() => { console.log("Super Admin started at this port " + PORT);})
 
 //DB Connection 
  

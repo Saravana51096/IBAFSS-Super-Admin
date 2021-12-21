@@ -59,4 +59,4 @@ const PanelUser = new mongoose.Schema({
             default: Date.now()
         }
 })
-module.exports = mongoose.model("PanelUser", PanelUser);
+module.exports = mongoose.model("PanelUser_SuperAdmin", PanelUser);

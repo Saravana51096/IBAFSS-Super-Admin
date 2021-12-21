@@ -68,4 +68,4 @@ const Plans = new mongoose.Schema({
     }
     
 })
-module.exports = mongoose.model("Plans", Plans);
+module.exports = mongoose.model("Plans_SuperAdmin", Plans);

@@ -45,4 +45,4 @@ const OrdersTable = new mongoose.Schema({
             default: Date.now()
         }
 })
-module.exports = mongoose.model("Orders", OrdersTable);
+module.exports = mongoose.model("Orders_SuperAdmin", OrdersTable);
