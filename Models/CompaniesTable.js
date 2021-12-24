@@ -83,11 +83,11 @@ const CompaniesTable = new mongoose.Schema({
     },
     CompanyLogo  :
     {
-        type : String,
+        type : [],
     },
     Documents  :
     {
-        type : String,
+        type : [],
     },
     LabelName:
     {

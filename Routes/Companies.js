@@ -10,46 +10,169 @@ var Storage = multer.diskStorage({
        cb(null,file.originalname);
     }
   });
-  var upload = multer({ storage: Storage }).array('CompanyLogo',10);
+  var upload = multer({ storage: Storage }).array('image',10)
 //add 
 
 router.post("/Companies", upload, async (req, res) => {
-
+   console.log(req.files.length)
     try {
+    if (req.files.length == 0) {
+        var data = new CompaniesTable({
+        CompanyName: req.body.CompanyName,
+        CompanyEmail: req.body.CompanyEmail,
+        CompanyPhone: req.body.CompanyPhone,
+        Mobile: req.body.Mobile,
+        CompanyWebsite: req.body.CompanyWebsite,
+        CompanyGST: req.body.CompanyGST,
+        CompanyPan: req.body.CompanyPan,
+        CompanyType: req.body.CompanyType,
+        Date: req.body.Date,
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Package: req.body.Package,
+        DepositType: req.body.DepositType,
+        Address1: req.body.Address1,
+        Address2: req.body.Address2,
+        Country: req.body.Country,
+        State: req.body.State,
+        City: req.body.City,
+        Pincode: req.body.Pincode,
+        CompanyLogo: "",
+        Documents: "",
+        LabelName: req.body.LabelName,
+        Value: req.body.Value
+    });
+    if (req.body) {
+    await data.save();
+    res.json(data);
+    }
+    }
+    else if(req.files.length == 1){
+
+    var data = new CompaniesTable({
+        CompanyName: req.body.CompanyName,
+        CompanyEmail: req.body.CompanyEmail,
+        CompanyPhone: req.body.CompanyPhone,
+        Mobile: req.body.Mobile,
+        CompanyWebsite: req.body.CompanyWebsite,
+        CompanyGST: req.body.CompanyGST,
+        CompanyPan: req.body.CompanyPan,
+        CompanyType: req.body.CompanyType,
+        Date: req.body.Date,
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Package: req.body.Package,
+        DepositType: req.body.DepositType,
+        Address1: req.body.Address1,
+        Address2: req.body.Address2,
+        Country: req.body.Country,
+        State: req.body.State,
+        City: req.body.City,
+        Pincode: req.body.Pincode,
+        CompanyLogo: req.files[0].originalname,
+        LabelName: req.body.LabelName,
+        Value: req.body.Value
+    });
+    if (req.body) {
+    await data.save();
+    res.json(data);
+    }
+    }else if(req.files.length == 2){
+        var data = new CompaniesTable({
+            CompanyName: req.body.CompanyName,
+            CompanyEmail: req.body.CompanyEmail,
+            CompanyPhone: req.body.CompanyPhone,
+            Mobile: req.body.Mobile,
+            CompanyWebsite: req.body.CompanyWebsite,
+            CompanyGST: req.body.CompanyGST,
+            CompanyPan: req.body.CompanyPan,
+            CompanyType: req.body.CompanyType,
+            Date: req.body.Date,
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Package: req.body.Package,
+            DepositType: req.body.DepositType,
+            Address1: req.body.Address1,
+            Address2: req.body.Address2,
+            Country: req.body.Country,
+            State: req.body.State,
+            City: req.body.City,
+            Pincode: req.body.Pincode,
+            CompanyLogo: req.files[0].originalname,
+            Documents: req.files[1].originalname,
+            LabelName: req.body.LabelName,
+            Value: req.body.Value
+        });
+        if (req.body) {
+        await data.save();
+        res.json(data);
+        }
+        }
+    } catch (err) {
+    if (err) {
+    console.log(err)
+    }
+    }
+   })
+ 
+router.put("/Companies/:id",upload,async (req, res) => { 
+    try {
+        console.log(req.files.length)
         if (req.files.length == 0) {
-            var data = new CompaniesTable({
-                CompanyName: req.body.CompanyName,
-                CompanyEmail: req.body.CompanyEmail,
-                CompanyPhone: req.body.CompanyPhone,
-                Mobile: req.body.Mobile,
-                CompanyWebsite: req.body.CompanyWebsite,
-                CompanyGST: req.body.CompanyGST,
-                CompanyPan: req.body.CompanyPan,
-                CompanyType: req.body.CompanyType,
-                Date: req.body.Date,
-                Username: req.body.Username,
-                Password: req.body.Password,
-                Package: req.body.Package,
-                DepositType: req.body.DepositType,
-                Address1: req.body.Address1,
-                Address2: req.body.Address2,
-                Country: req.body.Country,
-                State: req.body.State,
-                City: req.body.City,
-                Pincode: req.body.Pincode,
-                CompanyLogo:"",
-                Documents: req.body.Documents,
-                LabelName: req.body.LabelName,
-                Value: req.body.Value
-            });
-            if (req.body) {
-                await data.save();
-                res.json(data);
-            }
+            var data = await CompaniesTable.updateMany({ _id: req.params.id }, {
+                $set: {
+                    CompanyName: req.body.CompanyName,
+                    CompanyEmail: req.body.CompanyEmail,
+                    CompanyPhone: req.body.CompanyPhone,
+                    Mobile: req.body.Mobile,
+                    CompanyWebsite: req.body.CompanyWebsite,
+                    CompanyGST: req.body.CompanyGST,
+                    CompanyPan: req.body.CompanyPan,
+                    CompanyType: req.body.CompanyType,
+                    Date: req.body.Date,
+                    Username: req.body.Username,
+                    Password: req.body.Password,
+                    Package: req.body.Package,
+                    DepositType: req.body.DepositType,
+                    Address1: req.body.Address1,
+                    Address2: req.body.Address2,
+                    Country: req.body.Country,
+                    State: req.body.State,
+                    City: req.body.City,
+                    Pincode: req.body.Pincode,
+                    LabelName: req.body.LabelName,
+                    Value: req.body.Value
+               
+                }
+            })
+            res.json(data)
         }
         else {
-            if (req.files) {
-                var data = new CompaniesTable({
+            if (req.params.id && req.files) {
+                var fs = require('fs');
+                var data = await CompaniesTable.find({ _id: req.params.id })
+                // console.log('eeeeee',data)
+                // console.log('ttttttt',data[0].CompanyLogo[0])
+                var photodelete = data[0].CompanyLogo[0];
+                var photodelete1 = data[0].Documents[0];
+                if (!photodelete && !photodelete1) {
+                    console.log("Photo Delete");
+                }
+                else {
+                    if (photodelete) {
+                        fs.unlink(path.join(__dirname + `../../public/uploads/${photodelete}`), function (err) {
+                            if (err) throw err;
+                            console.log('File deleted!');
+                        });
+                    }
+                    if (photodelete1) {
+                        fs.unlink(path.join(__dirname + `../../public/uploads/${photodelete1}`), function (err) {
+                            if (err) throw err;
+                            console.log('File deleted!');
+                        });
+                    }
+                    var data = await CompaniesTable.updateMany({ _id: req.params.id }, {
+                        $set: {
                     CompanyName: req.body.CompanyName,
                     CompanyEmail: req.body.CompanyEmail,
                     CompanyPhone: req.body.CompanyPhone,
@@ -70,109 +193,25 @@ router.post("/Companies", upload, async (req, res) => {
                     City: req.body.City,
                     Pincode: req.body.Pincode,
                     CompanyLogo: req.files[0].originalname,
-                    Documents: req.body.Documents,
+                    Documents: req.files[1].originalname,
                     LabelName: req.body.LabelName,
                     Value: req.body.Value
-                });
-                if (req.body) {
-                    await data.save();
-                    res.json(data);
-                }
-            }
-        }
-    } catch (err) {
-        if (err) {
-            console.log(err)
-        }
-    }
-})
 
 
-//Update
-router.put("/Companies/:id",upload, async (req, res) => { 
-  
-try {
-    if (req.files.length == 0) {
-        var data = await CompaniesTable.updateMany({ _id: req.params.id }, {
-            $set: {
-                CompanyName: req.body.CompanyName,
-                CompanyEmail: req.body.CompanyEmail,
-                CompanyPhone: req.body.CompanyPhone,
-                Mobile: req.body.Mobile,
-                CompanyWebsite: req.body.CompanyWebsite,
-                CompanyGST: req.body.CompanyGST,
-                CompanyPan: req.body.CompanyPan,
-                CompanyType: req.body.CompanyType,
-                Date: req.body.Date,
-                Username: req.body.Username,
-                Password: req.body.Password,
-                Package: req.body.Package,
-                DepositType: req.body.DepositType,
-                Address1: req.body.Address1,
-                Address2: req.body.Address2,
-                Country: req.body.Country,
-                State: req.body.State,
-                City: req.body.City,
-                Pincode: req.body.Pincode,
-                CompanyLogo: req.files[0].originalname,
-                Documents: req.body.Documents,
-                LabelName: req.body.LabelName,
-                Value: req.body.Value
-            }
-            })
-        res.json(data)
-    }
-    else {
-        if (req.params.id && req.files) {
-            var fs = require('fs');
-            var data = await CompaniesTable.find({ _id: req.params.id })
-            var photodelete = data[0].CompanyLogo;
-            if (!photodelete) {
-                console.log("Photo Delete");
-            }
-            else {
-                fs.unlink(path.join(__dirname + `../../public/uploads/${photodelete}`), function (err) {
-                    if (err) throw err;
-                    console.log('File deleted!');
-                });
-                var data = await CompaniesTable.updateMany({ _id: req.params.id }, {
-                    $set: {
-                        CompanyName: req.body.CompanyName,
-                        CompanyEmail: req.body.CompanyEmail,
-                        CompanyPhone: req.body.CompanyPhone,
-                        Mobile: req.body.Mobile,
-                        CompanyWebsite: req.body.CompanyWebsite,
-                        CompanyGST: req.body.CompanyGST,
-                        CompanyPan: req.body.CompanyPan,
-                        CompanyType: req.body.CompanyType,
-                        Date: req.body.Date,
-                        Username: req.body.Username,
-                        Password: req.body.Password,
-                        Package: req.body.Package,
-                        DepositType: req.body.DepositType,
-                        Address1: req.body.Address1,
-                        Address2: req.body.Address2,
-                        Country: req.body.Country,
-                        State: req.body.State,
-                        City: req.body.City,
-                        Pincode: req.body.Pincode,
-                        Documents: req.body.Documents,
-                        LabelName: req.body.LabelName,
-                        Value: req.body.Value
-                    }
+                        }
                     })
-                res.json({ message: "updated Successfully", data })
+                    res.json({ message: "updated Successfully", data })
+                }
+            } else {
+                console.log("not deleted")
             }
-        } else {
-            console.log("not deleted")
         }
+    }catch (err) {
+    if (err) {
+    console.log(err)
     }
-}catch (err) {
-if (err) {
-console.log(err)
-}
-}
-})
+   }
+   })
 
 
 
@@ -213,5 +252,7 @@ router.put("/Companies/delete/:id", async (req, res) => {
         }
     }
 })
+
+
 
 module.exports = router;
