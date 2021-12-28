@@ -6,7 +6,10 @@ const mongoose = require("mongoose")
 const morgan = require('morgan');
 const multer = require('multer');
 const path = require('path');
+const fileUpload = require('express-fileupload');
+
 require('dotenv').config()
+app.use(fileUpload());
 
 // const {MONGOURI} = require('./config/Key')
 app.use(express.static('public'));
